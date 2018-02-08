@@ -1,0 +1,13 @@
+_ReSharper*
+.idea/
+bin/
+*.swp
+obj/
+*.user
+*.suo
+.gitk*
+*AssemblyTitle.cs
+.nuget/NuGet.exe
+packages/
+*.backup
+.vs/
