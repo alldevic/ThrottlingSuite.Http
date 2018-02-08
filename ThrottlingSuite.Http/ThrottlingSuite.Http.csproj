@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B54E4A90-B85B-4364-8368-69A3DE6063A5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ThrottlingSuite.Http</RootNamespace>
+    <AssemblyName>ThrottlingSuite.Http</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\ThrottlingSuite.Http.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\ThrottlingSuite.Http.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ThrottlingSuite.Http.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.1.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.1.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\ThrottlingSuite\Core\AverageThrottlingController.cs">
+      <Link>Core\AverageThrottlingController.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\ControllerInstanceInitializer.cs">
+      <Link>Core\ControllerInstanceInitializer.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\IThrottlingController.cs">
+      <Link>Core\IThrottlingController.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\IThrottlingControllerInstance.Extensions.cs">
+      <Link>Core\IThrottlingControllerInstance.Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\IThrottlingScope.Extensions.cs">
+      <Link>Core\IThrottlingScope.Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\LinearThrottlingController.cs">
+      <Link>Core\LinearThrottlingController.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\ScopeItemCondition.cs">
+      <Link>Core\ScopeItemCondition.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\SignatureBuilderParameters.cs">
+      <Link>Core\SignatureBuilderParameters.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\ThrottlingConfiguration.cs">
+      <Link>Core\ThrottlingConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\ThrottlingConfigurationProvider.cs">
+      <Link>Core\ThrottlingConfigurationProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\ThrottlingControllerBase.cs">
+      <Link>Core\ThrottlingControllerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\ThrottlingControllerInstance.cs">
+      <Link>Core\ThrottlingControllerInstance.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\ThrottlingControllerSuite.Partial.cs">
+      <Link>Core\ThrottlingControllerSuite.Partial.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\ThrottlingScopeItem.cs">
+      <Link>Core\ThrottlingScopeItem.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\ThrottlingStatisticsAdapter.cs">
+      <Link>Core\ThrottlingStatisticsAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\ThrottlingSuite\Core\ThrottlingStatisticsData.cs">
+      <Link>Core\ThrottlingStatisticsData.cs</Link>
+    </Compile>
+    <Compile Include="Core\DefaultRequestSignatureBuilder.cs" />
+    <Compile Include="Core\HttpRequestMessageExtensions.cs" />
+    <Compile Include="Core\IRequestSignatureBuilder.cs" />
+    <Compile Include="Core\IThrottlingScope.cs" />
+    <Compile Include="Core\IThrottlingService.cs" />
+    <Compile Include="Core\RequestSignatureBuilderBase.cs" />
+    <Compile Include="Core\ThrottlingControllerSuite.cs" />
+    <Compile Include="Core\ThrottlingScope.cs" />
+    <Compile Include="Handlers\ThrottlingStatisticsHandler.cs" />
+    <Compile Include="Handlers\ThrottlingHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.Http.cd" />
+    <None Include="packages.config" />
+    <None Include="ThrottlingSuite.Http.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

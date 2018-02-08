@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ThrottlingSuite.Core.DefaultRequestSignatureBuilder" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\DefaultRequestSignatureBuilder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ThrottlingSuite.Core.HttpRequestMessageExtensions" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAACAAAAQAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Core\HttpRequestMessageExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Core.RequestSignatureBuilderBase" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAIAAAAAAAAAAAAAAAAAAgAACAAAAAAA=</HashCode>
+      <FileName>Core\RequestSignatureBuilderBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ThrottlingControllerSuite" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAABGAAACAAAAAAAAAAAAAAAAAAABAAwAAAAAAAAAA=</HashCode>
+      <FileName>Core\ThrottlingControllerSuite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ThrottlingScope" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\ThrottlingScope.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ThrottlingSuite.Core.AverageHistory" Collapsed="true">
+    <Position X="1.75" Y="9" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\AverageThrottlingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ShortAverageThrottlingController" Collapsed="true">
+    <Position X="4.5" Y="8.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\AverageThrottlingController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ThrottlingSuite.Core.LongAverageThrottlingController" Collapsed="true">
+    <Position X="4.5" Y="7.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAACIACAAAAAAAAAAAAAAAABAAAAABCAgBAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\AverageThrottlingController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ControllerInstanceInitializer" Collapsed="true">
+    <Position X="14" Y="3.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAQAABAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\ControllerInstanceInitializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ThrottlingControllerStatus" Collapsed="true">
+    <Position X="4.75" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAQAAQAAASAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\IThrottlingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ThrottlingControllerBase" Collapsed="true">
+    <Position X="4.75" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAACIAACAQAAAAAEBAAAAAABAAAAAAAAABAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\IThrottlingController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ThrottlingSuite.Core.IThrottlingScopeExtensions" Collapsed="true">
+    <Position X="7.5" Y="6.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\IThrottlingScope.Extensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Core.LinearThrottlingController" Collapsed="true">
+    <Position X="1.75" Y="7.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQACIACAAAAAAAAAAAAAAAABAAAAABAAgBAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\LinearThrottlingController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ThrottlingSuite.Core.SignatureBuilderParameters" Collapsed="true">
+    <Position X="14" Y="2.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAQAAQAAAAQAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\SignatureBuilderParameters.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ThrottlingConfiguration" Collapsed="true">
+    <Position X="14" Y="2" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAIAAACgACEAIAAAAAAAAAAAAAQAACAQ=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\ThrottlingConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ThrottlingConfigurationProvider" Collapsed="true">
+    <Position X="14" Y="1.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\ThrottlingConfigurationProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ThrottlingConfigurationHandler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\ThrottlingConfigurationProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ThrottlingControllerInstance" Collapsed="true">
+    <Position X="6" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAACAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\ThrottlingControllerInstance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ThrottlingScopeItem" Collapsed="true">
+    <Position X="7.5" Y="5.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAIIAAAAGAAAIAwAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\ThrottlingScopeItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ThrottlingStatisticsAdapter" Collapsed="true">
+    <Position X="10.5" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\ThrottlingStatisticsAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Core.ThrottlingStatisticsData" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAIAAAAAAAAAAABAEAAAAQAAAIAAACAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\ThrottlingStatisticsData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Core.InstancesStatisticsData" Collapsed="true">
+    <Position X="10.5" Y="3.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAABIAACAAAAAQAARAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\ThrottlingStatisticsData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThrottlingSuite.Http.Handlers.ThrottlingHandler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAASAIAAAAIQAAAAQAAIAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Handlers\ThrottlingHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ThrottlingSuite.Http.Handlers.ThrottlingStatisticsHandler" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Handlers\ThrottlingStatisticsHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="ThrottlingSuite.Core.IRequestSignatureBuilder" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Core\IRequestSignatureBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ThrottlingSuite.Core.IThrottlingScope" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\ThrottlingScope.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ThrottlingSuite.Core.IThrottlingController" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAIAACAAAAAQAERAAAAAAJAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\IThrottlingController.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="ThrottlingSuite.Core.ConcurrencyModel" Collapsed="true">
+    <Position X="1.75" Y="8.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\ThrottlingConfiguration.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ThrottlingSuite.Core.ScopeItemCondition" Collapsed="true">
+    <Position X="7.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAJAAEAAAACAgBAAAAIAAAAQIAAEAAAU=</HashCode>
+      <FileName>C:\Users\LGranovsky\Documents\Visual Studio 2010\Projects\ThrottlingSuite\ThrottlingSuite\Core\ThrottlingScopeItem.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
