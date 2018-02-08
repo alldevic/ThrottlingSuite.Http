@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{209BFEAA-D7D7-41CA-8227-CACAD95D606A}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
+		ThrottlingSuite.vsmdi = ThrottlingSuite.vsmdi
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThrottlingSuite", "ThrottlingSuite\ThrottlingSuite.csproj", "{25EF6708-7846-422C-A36A-3756398107F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThrottlingSuiteUnitTests", "ThrottlingSuiteUnitTests\ThrottlingSuiteUnitTests.csproj", "{4C996DC6-88E4-496E-A9FC-48CA52159743}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThrottlingSuite.Http", "ThrottlingSuite.Http\ThrottlingSuite.Http.csproj", "{B54E4A90-B85B-4364-8368-69A3DE6063A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThrottlingWebApiTest", "ThrottlingWebApiTest\ThrottlingWebApiTest.csproj", "{BF19DC9C-7597-4E3F-909C-C2F074B9EC74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThrottlingSuite.Http.Tests", "ThrottlingSuite.Http.Tests\ThrottlingSuite.Http.Tests.csproj", "{EF3BC900-3FCC-417D-905D-6E4DA9D21391}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = ThrottlingSuite.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{25EF6708-7846-422C-A36A-3756398107F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25EF6708-7846-422C-A36A-3756398107F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25EF6708-7846-422C-A36A-3756398107F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25EF6708-7846-422C-A36A-3756398107F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C996DC6-88E4-496E-A9FC-48CA52159743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C996DC6-88E4-496E-A9FC-48CA52159743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C996DC6-88E4-496E-A9FC-48CA52159743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C996DC6-88E4-496E-A9FC-48CA52159743}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B54E4A90-B85B-4364-8368-69A3DE6063A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B54E4A90-B85B-4364-8368-69A3DE6063A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B54E4A90-B85B-4364-8368-69A3DE6063A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B54E4A90-B85B-4364-8368-69A3DE6063A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF19DC9C-7597-4E3F-909C-C2F074B9EC74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF19DC9C-7597-4E3F-909C-C2F074B9EC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF19DC9C-7597-4E3F-909C-C2F074B9EC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF19DC9C-7597-4E3F-909C-C2F074B9EC74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF3BC900-3FCC-417D-905D-6E4DA9D21391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF3BC900-3FCC-417D-905D-6E4DA9D21391}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF3BC900-3FCC-417D-905D-6E4DA9D21391}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF3BC900-3FCC-417D-905D-6E4DA9D21391}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = .
+	EndGlobalSection
+EndGlobal
