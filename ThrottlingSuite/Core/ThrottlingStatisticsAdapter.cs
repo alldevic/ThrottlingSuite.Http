@@ -22,8 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ThrottlingSuite.Core
 {
@@ -45,7 +43,7 @@ namespace ThrottlingSuite.Core
                     data.IgnoreParametersCount = suite.Configuration.SignatureBuilderParams.IgnoreParameters.Count;
                     data.TotalInstances = suite.Instances.Count;
 
-                    InstancesStatisticsData instanceData = null;
+                    InstancesStatisticsData instanceData;
                     foreach (ThrottlingControllerInstance instance in suite.Instances)
                     {
                         instanceData = new InstancesStatisticsData();

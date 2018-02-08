@@ -20,14 +20,9 @@
 //   SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Web;
 using ThrottlingSuite.Core;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 
 namespace ThrottlingSuite.Modules
@@ -44,15 +39,15 @@ namespace ThrottlingSuite.Modules
             ThrottlingStatisticsData data = new ThrottlingStatisticsData();
             if (HttpContext.Current != null)
             {
-                object tmp = HttpContext.Current.Application[ThrottlingSuite.Modules.DuplicatedCallsFilter.ThrottlingControllerSuiteAppLocation];
+                object tmp = HttpContext.Current.Application[DuplicatedCallsFilter.ThrottlingControllerSuiteAppLocation];
                 if (tmp != null)
                 {
                     //collect data
                     ThrottlingControllerSuite suite = (ThrottlingControllerSuite)tmp;
-                    object filter = HttpContext.Current.Application[ThrottlingSuite.Modules.ClientConnectionAssertionFilter.ClientConnectionAssertionFilterAppLocation];
-                    ThrottlingSuite.Modules.ClientConnectionAssertionFilter connectionFilter = null;
+                    object filter = HttpContext.Current.Application[ClientConnectionAssertionFilter.ClientConnectionAssertionFilterAppLocation];
+                    ClientConnectionAssertionFilter connectionFilter = null;
                     if (filter != null)
-                        connectionFilter = (filter as ThrottlingSuite.Modules.ClientConnectionAssertionFilter);
+                        connectionFilter = (filter as ClientConnectionAssertionFilter);
 
                     data = adapter.CollectStatistics(suite, new[] { connectionFilter as ThrottlingControllerStatus });
                 }

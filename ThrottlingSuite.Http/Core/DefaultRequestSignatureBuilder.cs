@@ -21,10 +21,7 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Security.Cryptography;
 using System.Net.Http;
 
 namespace ThrottlingSuite.Core
@@ -52,25 +49,25 @@ namespace ThrottlingSuite.Core
             //NOTE: access to additional parameters via this.Controller.Configuration.SignatureBuilderParams
 
             StringBuilder sbr = new StringBuilder();
-            object tmp = null;
+            object tmp;
             //resource-specific
-            if (!this.Configuration.SignatureBuilderParams.UseInstanceUrl)
+            if (!Configuration.SignatureBuilderParams.UseInstanceUrl)
             {
-                this.ComputeFromUrl(request.RequestUri.PathAndQuery, ref sbr);
+                ComputeFromUrl(request.RequestUri.PathAndQuery, ref sbr);
             }
 
             //user-specific tracking
-            if (this.Configuration.SignatureBuilderParams.IgnoreClientIpAddress)
+            if (Configuration.SignatureBuilderParams.IgnoreClientIpAddress)
             {
                 tmp = request.GetClientIpAddress();
                 if (tmp != null)
-                    sbr.AppendFormat("[{0}]", (string)tmp);
+                    sbr.Append($"[{(string)tmp}]");
             }
-            if (this.Configuration.SignatureBuilderParams.EnableClientTracking)
+            if (Configuration.SignatureBuilderParams.EnableClientTracking)
             {
                 tmp = request.Headers.GetCookies(ThrottlingConfiguration.CookieTrackingName);
                 if (tmp != null)
-                    sbr.AppendFormat("[{0}]", string.Join("", tmp));
+                    sbr.Append($"[{string.Join("", tmp)}]");
             }
 
             return sbr.ToString();
@@ -82,9 +79,9 @@ namespace ThrottlingSuite.Core
             if (!string.IsNullOrWhiteSpace(pathAndQuery))
             {
                 //assure removing parameters to ignore from the Full URL string
-                string fullUrl = (string)pathAndQuery;
-                int position1 = 0, position2 = 0;
-                if (this.Configuration.SignatureBuilderParams.IgnoreAllQueryStringParameters)
+                var fullUrl = pathAndQuery;
+                int position1, position2;
+                if (Configuration.SignatureBuilderParams.IgnoreAllQueryStringParameters)
                 {
                     position1 = fullUrl.IndexOf("?", StringComparison.InvariantCultureIgnoreCase);
                     if (position1 > 0)
@@ -92,9 +89,9 @@ namespace ThrottlingSuite.Core
                 }
                 else
                 {
-                    if (string.IsNullOrWhiteSpace(fullUrl) && this.Configuration.SignatureBuilderParams.IgnoreParameters.Count > 0)
+                    if (string.IsNullOrWhiteSpace(fullUrl) && Configuration.SignatureBuilderParams.IgnoreParameters.Count > 0)
                     {
-                        foreach (string ignoreParam in this.Configuration.SignatureBuilderParams.IgnoreParameters)
+                        foreach (string ignoreParam in Configuration.SignatureBuilderParams.IgnoreParameters)
                         {
                             position1 = fullUrl.IndexOf(ignoreParam, StringComparison.InvariantCultureIgnoreCase);
                             if (position1 >= 0)
@@ -110,7 +107,7 @@ namespace ThrottlingSuite.Core
                         }
                     }
                 }
-                sbr.AppendFormat("[{0}]", fullUrl);
+                sbr.Append($"[{fullUrl}]");
             }
         }
     }

@@ -21,14 +21,8 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
-using System.Configuration;
 using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Collections.Concurrent;
 using ThrottlingSuite.Core;
 using System.Xml;
 
@@ -44,15 +38,15 @@ namespace ThrottlingSuite.Modules
         public ClientConnectionAssertionFilter()
             : base()
         {
-            this.Name = "Client Connection Assertion Filter";
+            Name = "Client Connection Assertion Filter";
         }
 
         public void Init(HttpApplication context)
         {
-            this.Configuration = ThrottlingConfigurationProvider.GetCurrentConfiguration();
-            if (this.Configuration.AssertConnectionXml != null)
+            Configuration = ThrottlingConfigurationProvider.GetCurrentConfiguration();
+            if (Configuration.AssertConnectionXml != null)
             {
-                XmlElement xmlData = (XmlElement)this.Configuration.AssertConnectionXml;
+                XmlElement xmlData = (XmlElement)Configuration.AssertConnectionXml;
                 ControllerInstanceInitializer initializer = new ControllerInstanceInitializer();
                 scope = initializer.CreateScope(xmlData);
                 context.Application.Lock();
@@ -74,13 +68,13 @@ namespace ThrottlingSuite.Modules
             if (scope.InScope(context, false))
             {
                 context.Items["ClientConnectionAssertionFilter_InScope"] = true;
-                this.IncrementTotalCalls();
+                IncrementTotalCalls();
                 //verify if call can go through
                 if (!context.Response.IsClientConnected)
                 {
-                    this.IncrementBlockedCalls();
+                    IncrementBlockedCalls();
                     context.Response.AppendToLog("[DISCONNECTED:1]");
-                    if (!this.Configuration.LogOnly)
+                    if (!Configuration.LogOnly)
                         application.CompleteRequest();
                 }
             }
@@ -96,9 +90,9 @@ namespace ThrottlingSuite.Modules
                 //verify if call can go through
                 if (!context.Response.IsClientConnected)
                 {
-                    this.IncrementBlockedCalls();
+                    IncrementBlockedCalls();
                     context.Response.AppendToLog("[DISCONNECTED:2]");
-                    if (!this.Configuration.LogOnly)
+                    if (!Configuration.LogOnly)
                         application.CompleteRequest();
                 }
             }

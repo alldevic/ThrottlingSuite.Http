@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,15 +10,15 @@ namespace ThrottlingSuite.Http.Tests
 
         public void AssertResponse(HttpResponseMessage response)
         {
-            this.responseToReturn = response;
+            responseToReturn = response;
         }
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (this.responseToReturn == null)
+            if (responseToReturn == null)
                 return base.SendAsync(request, cancellationToken);
 
-            return Task.Factory.StartNew(() => this.responseToReturn, cancellationToken);
+            return Task.Factory.StartNew(() => responseToReturn, cancellationToken);
         }
     }
 }

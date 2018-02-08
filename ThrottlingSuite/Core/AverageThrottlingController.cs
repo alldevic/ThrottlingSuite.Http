@@ -21,10 +21,8 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
-using System.Text;
 using System.Runtime.Serialization;
 
 namespace ThrottlingSuite.Core
@@ -58,7 +56,7 @@ namespace ThrottlingSuite.Core
         /// </summary>
         public AverageHistory()
         {
-            this.LastTime = DateTime.Now;
+            LastTime = DateTime.Now;
         }
     }
 
@@ -88,7 +86,7 @@ namespace ThrottlingSuite.Core
         public ShortAverageThrottlingController(int timeIntervalMsec, int maxThreshold, int cleanupInterval)
             : base(timeIntervalMsec, maxThreshold, cleanupInterval)
         {
-            this.ApplyLongtimePenalty = false;
+            ApplyLongtimePenalty = false;
         }
     }
 
@@ -112,7 +110,7 @@ namespace ThrottlingSuite.Core
         /// <summary>
         /// Gets current size of the dictionary internally used by the controller.
         /// </summary>
-        public override int LookupDictionarySize { get { return this.RequestsStat.Count; } }
+        public override int LookupDictionarySize { get { return RequestsStat.Count; } }
 
         /// <summary>
         /// Constructor with time interval in msec and threshold as a number of allowed requests per time interval. 
@@ -134,9 +132,9 @@ namespace ThrottlingSuite.Core
         public LongAverageThrottlingController(int timeIntervalMsec, int maxThreshold, int cleanupInterval)
             : base(timeIntervalMsec, maxThreshold, cleanupInterval)
         {
-            this.RequestsStat = new ConcurrentDictionary<string, AverageHistory>();
-            this.MinAverageThreshold = this.TimeIntervalMsec / this.MaxThreshold;
-            this.ApplyLongtimePenalty = true;
+            RequestsStat = new ConcurrentDictionary<string, AverageHistory>();
+            MinAverageThreshold = TimeIntervalMsec / MaxThreshold;
+            ApplyLongtimePenalty = true;
         }
 
         /// <summary>
@@ -148,9 +146,9 @@ namespace ThrottlingSuite.Core
         public override bool IsCallAllowed(string requestSignature, DateTime requestTimestamp)
         {
             //check defaults
-            if (this.TimeIntervalMsec == 0 || this.MaxThreshold == 0)
+            if (TimeIntervalMsec == 0 || MaxThreshold == 0)
                 return false;
-            if (this.TimeIntervalMsec == -1 || this.MaxThreshold == -1)
+            if (TimeIntervalMsec == -1 || MaxThreshold == -1)
                 return true;
             //follow up with rules
             bool isAllowed = true;
@@ -158,13 +156,13 @@ namespace ThrottlingSuite.Core
                 {
                     LastTime = requestTimestamp,
                     CurrentCount = 1,
-                    AverageTime = this.TimeIntervalMsec
+                    AverageTime = TimeIntervalMsec
                 };
 
-            double elapsedTime = this.TimeIntervalMsec;
+            double elapsedTime = TimeIntervalMsec;
 
 #region Critical section begins
-            if (this.ConcurrencyModel == Core.ConcurrencyModel.Optimistic)
+            if (ConcurrencyModel == ConcurrencyModel.Optimistic)
             {
                 CalculateAndUpdateStat(requestSignature, requestTimestamp, ref isAllowed, historyCopy, ref elapsedTime);
             }
@@ -177,18 +175,18 @@ namespace ThrottlingSuite.Core
             }
 #endregion Critical section ends
 #if TRACE
-            base.WriteTraceMessage(string.Format("Request: {0}; elapsedTime: {1}; {2} by [{3}]; (AverageTime: {4})", requestSignature, elapsedTime.ToString(), isAllowed ? "ALLOWED" : "BLOCKED", this.Name, historyCopy.AverageTime.ToString()));
+            WriteTraceMessage(string.Format("Request: {0}; elapsedTime: {1}; {2} by [{3}]; (AverageTime: {4})", requestSignature, elapsedTime.ToString(), isAllowed ? "ALLOWED" : "BLOCKED", Name, historyCopy.AverageTime.ToString()));
 #endif
-            this.IncrementTotalCalls();
+            IncrementTotalCalls();
             if (!isAllowed)
-                this.IncrementBlockedCalls();
+                IncrementBlockedCalls();
             return isAllowed;
         }
 
         private void CalculateAndUpdateStat(string requestSignature, DateTime requestTimestamp, ref bool isAllowed, AverageHistory historyCopy, ref double elapsedTime)
         {
             AverageHistory history = null;
-            if (this.RequestsStat.TryGetValue(requestSignature, out history))
+            if (RequestsStat.TryGetValue(requestSignature, out history))
             {
                 historyCopy.LastTime = requestTimestamp;
                 historyCopy.AverageTime = history.AverageTime;
@@ -200,26 +198,26 @@ namespace ThrottlingSuite.Core
                 double newAverageTime = ((historyCopy.AverageTime * historyCopy.CurrentCount) + elapsedTime) / (historyCopy.CurrentCount + 1.0);
                 historyCopy.AverageTime = newAverageTime;
                 historyCopy.CurrentCount++;
-                isAllowed = (newAverageTime >= this.MinAverageThreshold);
-                if (historyCopy.CurrentCount == this.MaxThreshold)
+                isAllowed = (newAverageTime >= MinAverageThreshold);
+                if (historyCopy.CurrentCount == MaxThreshold)
                 {   //we use TimeIntervalMsec as default value for 1st HTTP request; now we have full sequence, recalculate AVG time using Default (MIN) AVG
-                    newAverageTime = ((historyCopy.AverageTime * historyCopy.CurrentCount) - (this.TimeIntervalMsec - this.MinAverageThreshold)) / historyCopy.CurrentCount;
+                    newAverageTime = ((historyCopy.AverageTime * historyCopy.CurrentCount) - (TimeIntervalMsec - MinAverageThreshold)) / historyCopy.CurrentCount;
                     historyCopy.AverageTime = newAverageTime;
                 }
                 //if time since last call has been longer than threshold interval and ApplyPenalty is not set, then reset history
-                if (elapsedTime > this.TimeIntervalMsec && !this.ApplyLongtimePenalty)
+                if (elapsedTime > TimeIntervalMsec && !ApplyLongtimePenalty)
                 {
-                    historyCopy.AverageTime = this.TimeIntervalMsec;
+                    historyCopy.AverageTime = TimeIntervalMsec;
                     historyCopy.CurrentCount = 1.0;
                     isAllowed = true;
                 }
             }
 
             //record new history if call is allowed OR Longtime Penalty should be applied
-            if (isAllowed || this.ApplyLongtimePenalty)
+            if (isAllowed || ApplyLongtimePenalty)
             {
                 double elapsedTime2 = elapsedTime;
-                this.RequestsStat.AddOrUpdate(requestSignature, historyCopy, (key, existingHistory) =>
+                RequestsStat.AddOrUpdate(requestSignature, historyCopy, (key, existingHistory) =>
                 {
                     if (existingHistory == null)
                         return historyCopy;
@@ -239,20 +237,20 @@ namespace ThrottlingSuite.Core
 
         protected override void ExecuteCleanup()
         {
-            if (this.RequestsStat == null)
+            if (RequestsStat == null)
                 return;
 
             string key = "";
             DateTime now = DateTime.Now;
             AverageHistory tmp = null;
-            double lifetime = this.ApplyLongtimePenalty ? 300 * 1000 : this.TimeIntervalMsec * 2; //either 5 mins or 2x time interval
+            double lifetime = ApplyLongtimePenalty ? 300 * 1000 : TimeIntervalMsec * 2; //either 5 mins or 2x time interval
             int totalRemoved = 0;
-            for (int ii = 0; ii < this.RequestsStat.Count; ii++)
+            for (int ii = 0; ii < RequestsStat.Count; ii++)
             {
-                key = this.RequestsStat.Keys.ElementAt(ii);
-                if (now.Subtract(this.RequestsStat[key].LastTime).TotalMilliseconds > lifetime)
+                key = RequestsStat.Keys.ElementAt(ii);
+                if (now.Subtract(RequestsStat[key].LastTime).TotalMilliseconds > lifetime)
                 {
-                    if (this.RequestsStat.TryRemove(key, out tmp))
+                    if (RequestsStat.TryRemove(key, out tmp))
                     {
                         ii--;
                         totalRemoved++;
@@ -260,7 +258,7 @@ namespace ThrottlingSuite.Core
                 }
             }
 #if TRACE
-            base.WriteTraceMessage(string.Format("Throttling controller [{1}] lookup dictionary cleanup is complete. {0} items have beed removed.", totalRemoved.ToString(), this.Name));
+            WriteTraceMessage(string.Format("Throttling controller [{1}] lookup dictionary cleanup is complete. {0} items have beed removed.", totalRemoved.ToString(), Name));
 #endif
         }
 
@@ -269,7 +267,7 @@ namespace ThrottlingSuite.Core
         /// </summary>
         protected override void Dispose(bool disposing)
         {
-            this.RequestsStat.Clear();
+            RequestsStat.Clear();
             base.Dispose(disposing);
         }
     }

@@ -37,17 +37,17 @@ namespace ThrottlingSuite.Core
 
         public void Init(ThrottlingConfiguration configuration)
         {
-            this.Configuration = configuration;
+            Configuration = configuration;
         }
 
         public string ComputeRequestSignature(HttpContext context)
         {
-            if (this.Configuration == null)
+            if (Configuration == null)
                 throw new Exception("Configiration must be initialized before calling this method.");
 
             //compute request signature
-            string reqDescription = this.ComputeRequestDescription(context);
-            return this.ComputeRequestSignature(reqDescription);
+            string reqDescription = ComputeRequestDescription(context);
+            return ComputeRequestSignature(reqDescription);
         }
 
         protected abstract string ComputeRequestDescription(HttpContext context);

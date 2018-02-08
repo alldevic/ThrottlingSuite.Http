@@ -22,11 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
 
 namespace ThrottlingSuite.Core
 {
@@ -45,19 +42,19 @@ namespace ThrottlingSuite.Core
 
         public ThrottlingScope()
         {
-            this.Items = new List<ThrottlingScopeItem>();
+            Items = new List<ThrottlingScopeItem>();
         }
 
         public bool InScope(HttpContext context, bool hasSessionId)
         {
             ScopeItemCondition methodCondition = this.ConvertMethodToCondition(context.Request.HttpMethod);
 
-            return this.InScope(context.Request.RawUrl, methodCondition, hasSessionId);
+            return InScope(context.Request.RawUrl, methodCondition, hasSessionId);
         }
 
         private bool InScope(string url, ScopeItemCondition methodCondition, bool hasSessionId)
         {
-            foreach (ThrottlingScopeItem item in this.Items)
+            foreach (ThrottlingScopeItem item in Items)
             {
                 if (item.Condition == ScopeItemCondition.None
                     || (item.Condition.HasFlag(ScopeItemCondition.HasSessionId) && hasSessionId)

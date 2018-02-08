@@ -21,9 +21,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
 
 namespace ThrottlingSuite.Core
@@ -79,16 +76,16 @@ namespace ThrottlingSuite.Core
         /// </summary>
         public ThrottlingConfiguration()
         {
-            this.ConcurrencyModel = Core.ConcurrencyModel.Pessimistic;
-            this.RequestSignatureBuilderType = typeof(DefaultRequestSignatureBuilder);
-            this.SignatureBuilderParams = new SignatureBuilderParameters();
-            this.ResourcesCleanupInterval = DefaultCleanupIntervalMsec;
+            ConcurrencyModel = ConcurrencyModel.Pessimistic;
+            RequestSignatureBuilderType = typeof(DefaultRequestSignatureBuilder);
+            SignatureBuilderParams = new SignatureBuilderParameters();
+            ResourcesCleanupInterval = DefaultCleanupIntervalMsec;
             //set default request signature building params
-            this.RequestSignatureBuilderType = typeof(DefaultRequestSignatureBuilder);
-            this.SignatureBuilderParams.IgnoreAllQueryStringParameters = true;
-            this.SignatureBuilderParams.IgnoreClientIpAddress = true;
-            this.SignatureBuilderParams.EnableClientTracking = false;
-            this.SignatureBuilderParams.UseInstanceUrl = true;
+            RequestSignatureBuilderType = typeof(DefaultRequestSignatureBuilder);
+            SignatureBuilderParams.IgnoreAllQueryStringParameters = true;
+            SignatureBuilderParams.IgnoreClientIpAddress = true;
+            SignatureBuilderParams.EnableClientTracking = false;
+            SignatureBuilderParams.UseInstanceUrl = true;
         }
 
         /// <summary>
@@ -104,29 +101,29 @@ namespace ThrottlingSuite.Core
             XmlNode oNode = xmlData.Attributes.GetNamedItem("enabled");
             if (oNode == null)
                 throw new ApplicationException("Cannot find an [enabled] attribute in Throttling xml.");
-            this.Enabled = bool.Parse(oNode.InnerText.Trim());
+            Enabled = bool.Parse(oNode.InnerText.Trim());
 
             oNode = xmlData.Attributes.GetNamedItem("logOnly");
             if (oNode != null)
-                this.LogOnly = bool.Parse(oNode.InnerText.Trim());
+                LogOnly = bool.Parse(oNode.InnerText.Trim());
 
             bool enableClientTracking = false;
             oNode = xmlData.Attributes.GetNamedItem("enableClientTracking");
             if (oNode != null)
                 enableClientTracking = bool.Parse(oNode.InnerText.Trim());
-            this.SignatureBuilderParams.EnableClientTracking = enableClientTracking;
+            SignatureBuilderParams.EnableClientTracking = enableClientTracking;
 
             oNode = xmlData.Attributes.GetNamedItem("resourcesCleanupInterval");
             if (oNode != null)
-                this.ResourcesCleanupInterval = int.Parse(oNode.InnerText.Trim());
-            if (this.ResourcesCleanupInterval < 60000)
-                this.ResourcesCleanupInterval = 60000; //value cannot be less than 1 min
-            else if (this.ResourcesCleanupInterval > 600000)
-                this.ResourcesCleanupInterval = 600000; //value cannot be greater than 10 min
+                ResourcesCleanupInterval = int.Parse(oNode.InnerText.Trim());
+            if (ResourcesCleanupInterval < 60000)
+                ResourcesCleanupInterval = 60000; //value cannot be less than 1 min
+            else if (ResourcesCleanupInterval > 600000)
+                ResourcesCleanupInterval = 600000; //value cannot be greater than 10 min
 
             oNode = xmlData.Attributes.GetNamedItem("concurrency");
             if (oNode != null)
-                this.ConcurrencyModel = (ConcurrencyModel)Enum.Parse(typeof(ConcurrencyModel), oNode.InnerText.Trim(), true);
+                ConcurrencyModel = (ConcurrencyModel)Enum.Parse(typeof(ConcurrencyModel), oNode.InnerText.Trim(), true);
 
             XmlNodeList paramsList = xmlData.SelectNodes("ignoreParameters/add");
             foreach (XmlNode node in paramsList)
@@ -134,16 +131,16 @@ namespace ThrottlingSuite.Core
                 oNode = node.Attributes.GetNamedItem("name");
                 if (oNode == null)
                     throw new ApplicationException("Cannot find an [name] attribute in Throttling/ignoreParameters/add node xml.");
-                this.SignatureBuilderParams.IgnoreParameters.Add(oNode.InnerText.Trim());
+                SignatureBuilderParams.IgnoreParameters.Add(oNode.InnerText.Trim());
             }
 
             oNode = xmlData.SelectSingleNode("instances");
             if (oNode == null)
                 throw new ApplicationException("Cannot find an <instances> node in Throttling xml.");
-            this.InstancesXml = oNode;
+            InstancesXml = oNode;
 
             oNode = xmlData.SelectSingleNode("assertConnection");
-            this.AssertConnectionXml = oNode;
+            AssertConnectionXml = oNode;
 
             oNode = xmlData.SelectSingleNode("requestSignatureBuilder");
             if (oNode != null)
@@ -153,22 +150,22 @@ namespace ThrottlingSuite.Core
                     switch (attr.Name)
                     {
                         case "type":
-                            this.RequestSignatureBuilderType = Type.GetType(attr.Value, false, true);
+                            RequestSignatureBuilderType = Type.GetType(attr.Value, false, true);
                             break;
                         case "ignoreAllQueryStringParameters":
-                            this.SignatureBuilderParams.IgnoreAllQueryStringParameters = bool.Parse(attr.Value);
+                            SignatureBuilderParams.IgnoreAllQueryStringParameters = bool.Parse(attr.Value);
                             break;
                         case "ignoreClientIp":
-                            this.SignatureBuilderParams.IgnoreClientIpAddress = bool.Parse(attr.Value);
+                            SignatureBuilderParams.IgnoreClientIpAddress = bool.Parse(attr.Value);
                             break;
                         case "enableClientTracking":
-                            this.SignatureBuilderParams.EnableClientTracking = bool.Parse(attr.Value);
+                            SignatureBuilderParams.EnableClientTracking = bool.Parse(attr.Value);
                             break;
                         case "useInstanceUrl":
-                            this.SignatureBuilderParams.UseInstanceUrl = bool.Parse(attr.Value);
+                            SignatureBuilderParams.UseInstanceUrl = bool.Parse(attr.Value);
                             break;
                         default:
-                            this.SignatureBuilderParams.Add(attr.Name, attr.Value);
+                            SignatureBuilderParams.Add(attr.Name, attr.Value);
                             break;
                     }
                 }

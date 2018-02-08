@@ -21,10 +21,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
 using System.Net.Http;
 
 namespace ThrottlingSuite.Core
@@ -44,14 +40,14 @@ namespace ThrottlingSuite.Core
             blockedInstanceName = "";
             DateTime requestTimestamp = request.GetTimestamp();
             string requestSignatureInScope = string.Empty;
-            for (int ii = 0; ii < this.Instances.Count; ii++)
+            for (int ii = 0; ii < Instances.Count; ii++)
             {
-                if (this.Instances[ii].Scope.InScope(request, hasTracking))
+                if (Instances[ii].Scope.InScope(request, hasTracking))
                 {
-                    requestSignatureInScope = string.Join("-", this.Instances[ii].Name, requestSignature);
-                    if (!this.Instances[ii].Controller.IsCallAllowed(requestSignatureInScope, requestTimestamp))
+                    requestSignatureInScope = string.Join("-", Instances[ii].Name, requestSignature);
+                    if (!Instances[ii].Controller.IsCallAllowed(requestSignatureInScope, requestTimestamp))
                     {
-                        blockedInstanceName = this.Instances[ii].Name;
+                        blockedInstanceName = Instances[ii].Name;
                         return false;
                     }
                 }

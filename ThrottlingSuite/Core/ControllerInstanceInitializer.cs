@@ -22,9 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.Serialization;
 using System.Xml;
 using System.Text.RegularExpressions;
 
@@ -48,7 +45,7 @@ namespace ThrottlingSuite.Core
                 ThrottlingControllerInstance instance = null;
                 foreach (XmlNode node in nodes)
                 {
-                    instance = this.CreateInstance((XmlElement)node, configuration.ResourcesCleanupInterval);
+                    instance = CreateInstance((XmlElement)node, configuration.ResourcesCleanupInterval);
                     instance.Controller.ConcurrencyModel = configuration.ConcurrencyModel;
                     instances.Add(instance);
                 }
@@ -66,8 +63,8 @@ namespace ThrottlingSuite.Core
 
         public ThrottlingControllerInstance CreateInstance(XmlElement xmlData, int cleanupInterval)
         {
-            IThrottlingController controller = this.CreateController(xmlData, cleanupInterval);
-            ThrottlingScope scope = this.CreateScope(xmlData);
+            IThrottlingController controller = CreateController(xmlData, cleanupInterval);
+            ThrottlingScope scope = CreateScope(xmlData);
 
             return new ThrottlingControllerInstance(controller, scope);
         }
@@ -76,7 +73,7 @@ namespace ThrottlingSuite.Core
         {
             ThrottlingScope scope = new ThrottlingScope();
             ThrottlingScopeItem scopeItem = null;
-            System.Xml.XmlNode oNode = null;
+            XmlNode oNode = null;
             foreach (XmlNode scopeItemXml in xmlData.ChildNodes)
             {
                 if (scopeItemXml.Name == "clear")
@@ -140,7 +137,7 @@ namespace ThrottlingSuite.Core
             if (xmlData == null)
                 throw new ArgumentNullException("Xml configuration element cannot be null.");
 
-            System.Xml.XmlNode oNode = xmlData.Attributes.GetNamedItem("timeIntervalMsec");
+            XmlNode oNode = xmlData.Attributes.GetNamedItem("timeIntervalMsec");
             if (oNode == null)
                 throw new ApplicationException("Cannot find an [timeIntervalMsec] attribute in Throttling Instance configuration xml.");
             timeIntervalMsec = int.Parse(oNode.InnerText.Trim());

@@ -22,8 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ThrottlingSuite.Core
 {
@@ -40,7 +38,7 @@ namespace ThrottlingSuite.Core
         public SignatureBuilderParameters()
             : base(StringComparer.CurrentCultureIgnoreCase)
         {
-            this.IgnoreParameters = new List<string>();
+            IgnoreParameters = new List<string>();
         }
 
         /// <summary>
@@ -57,16 +55,16 @@ namespace ThrottlingSuite.Core
         {
             get
             {
-                if (!this.ContainsKey("ignoreAllQueryStringParameters"))
+                if (!ContainsKey("ignoreAllQueryStringParameters"))
                     return false;
-                return string.Compare(this["ignoreAllQueryStringParameters"], "true", true) == 0;
+                return String.Compare(this["ignoreAllQueryStringParameters"], "true", StringComparison.OrdinalIgnoreCase) == 0;
             }
             set
             {
-                if (this.ContainsKey("ignoreAllQueryStringParameters"))
+                if (ContainsKey("ignoreAllQueryStringParameters"))
                     this["ignoreAllQueryStringParameters"] = value.ToString();
                 else
-                    this.Add("ignoreAllQueryStringParameters", value.ToString());
+                    Add("ignoreAllQueryStringParameters", value.ToString());
             }
         }
 
@@ -78,16 +76,16 @@ namespace ThrottlingSuite.Core
         {
             get
             {
-                if (!this.ContainsKey("ignoreClientIp"))
+                if (!ContainsKey("ignoreClientIp"))
                     return false;
-                return string.Compare(this["ignoreClientIp"], "true", true) == 0;
+                return String.Compare(this["ignoreClientIp"], "true", StringComparison.OrdinalIgnoreCase) == 0;
             }
             set
             {
-                if (this.ContainsKey("ignoreClientIp"))
+                if (ContainsKey("ignoreClientIp"))
                     this["ignoreClientIp"] = value.ToString();
                 else
-                    this.Add("ignoreClientIp", value.ToString());
+                    Add("ignoreClientIp", value.ToString());
             }
         }
 
@@ -99,16 +97,16 @@ namespace ThrottlingSuite.Core
         {
             get
             {
-                if (!this.ContainsKey("enableClientTracking"))
+                if (!ContainsKey("enableClientTracking"))
                     return false;
-                return string.Compare(this["enableClientTracking"], "true", true) == 0;
+                return String.Compare(this["enableClientTracking"], "true", StringComparison.OrdinalIgnoreCase) == 0;
             }
             set
             {
-                if (this.ContainsKey("enableClientTracking"))
+                if (ContainsKey("enableClientTracking"))
                     this["enableClientTracking"] = value.ToString();
                 else
-                    this.Add("enableClientTracking", value.ToString());
+                    Add("enableClientTracking", value.ToString());
             }
         }
 
@@ -121,16 +119,16 @@ namespace ThrottlingSuite.Core
         {
             get
             {
-                if (!this.ContainsKey("useInstanceUrl"))
+                if (!ContainsKey("useInstanceUrl"))
                     return false;
-                return string.Compare(this["useInstanceUrl"], "true", true) == 0;
+                return String.Compare(this["useInstanceUrl"], "true", StringComparison.OrdinalIgnoreCase) == 0;
             }
             set
             {
-                if (this.ContainsKey("useInstanceUrl"))
+                if (ContainsKey("useInstanceUrl"))
                     this["useInstanceUrl"] = value.ToString();
                 else
-                    this.Add("useInstanceUrl", value.ToString());
+                    Add("useInstanceUrl", value.ToString());
             }
         }
     }

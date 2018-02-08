@@ -21,16 +21,10 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Tracing;
 using ThrottlingSuite.Core;
 
 namespace ThrottlingSuite.Http.Handlers
@@ -53,13 +47,13 @@ namespace ThrottlingSuite.Http.Handlers
                 throw new ArgumentNullException("throttlingService");
 
             this.throttlingService = throttlingService;
-            this.EnsureSignatureBuilder(this.throttlingService.Configuration);
+            EnsureSignatureBuilder(this.throttlingService.Configuration);
         }
 
         private void EnsureSignatureBuilder(ThrottlingConfiguration configuration)
         {
-            this.RequestSignatureBuilder = (IRequestSignatureBuilder)Activator.CreateInstance(configuration.RequestSignatureBuilderType);
-            this.RequestSignatureBuilder.Init(configuration);
+            RequestSignatureBuilder = (IRequestSignatureBuilder)Activator.CreateInstance(configuration.RequestSignatureBuilderType);
+            RequestSignatureBuilder.Init(configuration);
         }
 
         /// <summary>
@@ -68,7 +62,7 @@ namespace ThrottlingSuite.Http.Handlers
         /// <returns>Returns an instance of class that implements IThrottlingService interface.</returns>
         public IThrottlingService GetThrottlingService()
         {
-            return this.throttlingService;
+            return throttlingService;
         }
 
         /// <summary>
@@ -81,12 +75,12 @@ namespace ThrottlingSuite.Http.Handlers
         protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             double recommendedDelay = 0;
-            if (this.EvaluateRequest(request, out recommendedDelay))
+            if (EvaluateRequest(request, out recommendedDelay))
             {
                 // Call the inner handler.
                 HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
 
-                this.EnsureTrackableResponse(request, response);
+                EnsureTrackableResponse(request, response);
 
                 return response;
             }
@@ -116,7 +110,7 @@ namespace ThrottlingSuite.Http.Handlers
 #if TRACE
                     trace = request.GetConfiguration().Services.GetTraceWriter();
 #endif
-                    if (!this.throttlingService.Configuration.Enabled)
+                    if (!throttlingService.Configuration.Enabled)
                     {
 #if TRACE
                         if (trace != null)
@@ -129,16 +123,16 @@ namespace ThrottlingSuite.Http.Handlers
                     watch.Start();
 #endif
                     //compute request signature
-                    requestSignature = this.RequestSignatureBuilder.ComputeRequestSignature(request);
+                    requestSignature = RequestSignatureBuilder.ComputeRequestSignature(request);
 
                     bool hasTracking = HasTrackingCookie(request);
                     //verify if call can go through
                     string blockedInstanceName = "";
-                    if (!this.throttlingService.IsCallAllowed(request, requestSignature, hasTracking, out blockedInstanceName))
+                    if (!throttlingService.IsCallAllowed(request, requestSignature, hasTracking, out blockedInstanceName))
                     {
-                        IThrottlingController blockedBy = this.throttlingService.GetControllerByName(blockedInstanceName);
+                        IThrottlingController blockedBy = throttlingService.GetControllerByName(blockedInstanceName);
                         recommendedDelay = blockedBy.TimeIntervalMsec / blockedBy.MaxThreshold;
-                        if (this.throttlingService.Configuration.LogOnly)
+                        if (throttlingService.Configuration.LogOnly)
                         {
 #if TRACE
                             if (trace != null)
@@ -167,7 +161,7 @@ namespace ThrottlingSuite.Http.Handlers
 
         private void EnsureTrackableResponse(HttpRequestMessage request, HttpResponseMessage response)
         {
-            if (this.throttlingService.Configuration.SignatureBuilderParams.EnableClientTracking)
+            if (throttlingService.Configuration.SignatureBuilderParams.EnableClientTracking)
             {
                 if (request != null && response != null)
                 {
@@ -181,7 +175,7 @@ namespace ThrottlingSuite.Http.Handlers
 
         private bool HasTrackingCookie(HttpRequestMessage request)
         {
-            if (this.throttlingService.Configuration.SignatureBuilderParams.EnableClientTracking)
+            if (throttlingService.Configuration.SignatureBuilderParams.EnableClientTracking)
             {
                 return (request.Headers.GetCookies(ThrottlingConfiguration.CookieTrackingName) != null);
             }
@@ -193,8 +187,8 @@ namespace ThrottlingSuite.Http.Handlers
         /// </summary>
         protected override void Dispose(bool disposing)
         {
-            if (this.throttlingService != null)
-                (this.throttlingService as IDisposable).Dispose();
+            if (throttlingService != null)
+                (throttlingService as IDisposable).Dispose();
             base.Dispose(disposing);
         }
     }

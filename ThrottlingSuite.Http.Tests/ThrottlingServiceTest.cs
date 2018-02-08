@@ -20,20 +20,15 @@
 //    under certain conditions;
 #endregion
 
-using ThrottlingSuite.Http.Handlers;
 using ThrottlingSuite.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http.Hosting;
 using System.Web.Http.Controllers;
 using System.Diagnostics;
-using System.Net;
-using System.Threading.Tasks;
-using System.Threading;
 using ThrottlingSuite.Http.Tests;
 
 namespace ThrottlingSuiteUnitTests
@@ -76,7 +71,7 @@ namespace ThrottlingSuiteUnitTests
         [TestMethod()]
         public void IsCallAllowedTest_Allowed()
         {
-            IThrottlingService throttle = this.SetupThrottle();
+            IThrottlingService throttle = SetupThrottle();
 
             HttpRequestMessage request = CreateRequest(HttpMethod.Get, "http://localhost/api/values");
             string blockedName;
@@ -88,7 +83,7 @@ namespace ThrottlingSuiteUnitTests
         [TestMethod()]
         public void IsCallAllowedTest_Blocked()
         {
-            IThrottlingService throttle = this.SetupThrottle();
+            IThrottlingService throttle = SetupThrottle();
 
             //1st request - should be allowed
             HttpRequestMessage request = CreateRequest(HttpMethod.Get, "http://localhost/testapi");
@@ -110,7 +105,7 @@ namespace ThrottlingSuiteUnitTests
         [TestMethod()]
         public void IsCallAllowedTimingTest()
         {
-            IThrottlingService throttle = this.SetupThrottle();
+            IThrottlingService throttle = SetupThrottle();
 
             string blockedName;
             bool result = false;
@@ -126,14 +121,14 @@ namespace ThrottlingSuiteUnitTests
             }
 
             watch.Stop();
-            this.testContextInstance.WriteLine("Total ms: {0}; OK calls: {1}", watch.ElapsedMilliseconds, counter);
+            testContextInstance.WriteLine("Total ms: {0}; OK calls: {1}", watch.ElapsedMilliseconds, counter);
             Assert.IsTrue(counter / 10 <= watch.ElapsedMilliseconds);
         }
 
         [TestMethod()]
         public void IsCallAllowedTimingTest2()
         {
-            IThrottlingService throttle = this.SetupThrottle();
+            IThrottlingService throttle = SetupThrottle();
 
             string blockedName;
             bool result = false;
@@ -158,7 +153,7 @@ namespace ThrottlingSuiteUnitTests
             });
 
             watch.Stop();
-            this.testContextInstance.WriteLine("Total ms: {0}; OK calls: {1}", watch.ElapsedMilliseconds, total);
+            testContextInstance.WriteLine("Total ms: {0}; OK calls: {1}", watch.ElapsedMilliseconds, total);
             Assert.IsTrue(total / 10 <= watch.ElapsedMilliseconds);
         }
     }

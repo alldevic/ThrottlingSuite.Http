@@ -21,15 +21,9 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Http;
 using ThrottlingSuite.Core;
 
 namespace ThrottlingSuite.Http.Handlers
@@ -62,7 +56,7 @@ namespace ThrottlingSuite.Http.Handlers
         /// <returns>Returns a Task&lt;HttpResponseMessage&gt; type.</returns>
         protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            HttpResponseMessage response = this.ProcessRequest(request);
+            HttpResponseMessage response = ProcessRequest(request);
 
             return await Task.Run(() => response);
         }
@@ -71,10 +65,10 @@ namespace ThrottlingSuite.Http.Handlers
         {
             ThrottlingStatisticsAdapter adapter = new ThrottlingStatisticsAdapter();
             ThrottlingStatisticsData data = new ThrottlingStatisticsData();
-            if (this.throttlingService != null)
+            if (throttlingService != null)
             {
                 //collect data
-                data = adapter.CollectStatistics(this.throttlingService, null);
+                data = adapter.CollectStatistics(throttlingService, null);
             }
             else
                 data.Message = "The Throttling Controller Suite is not yet created.";

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using System.Web.Http.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -61,7 +56,7 @@ namespace ThrottlingSuite.Http.Tests
         [TestMethod()]
         public void IsCallAllowedTest_Allowed()
         {
-            ThrottlingHandler handler = this.SetupThrottleHandler();
+            ThrottlingHandler handler = SetupThrottleHandler();
             HttpMessageInvoker invoker = new HttpMessageInvoker(handler);
 
             HttpRequestMessage request = CreateRequest(HttpMethod.Get, "http://localhost/api/values");
@@ -73,7 +68,7 @@ namespace ThrottlingSuite.Http.Tests
         [TestMethod()]
         public void IsCallAllowedTest_Blocked()
         {
-            ThrottlingHandler handler = this.SetupThrottleHandler();
+            ThrottlingHandler handler = SetupThrottleHandler();
             HttpMessageInvoker invoker = new HttpMessageInvoker(handler);
 
             //1st request - should be allowed
@@ -101,7 +96,7 @@ namespace ThrottlingSuite.Http.Tests
         [TestMethod()]
         public void IsCallAllowedTimingTest()
         {
-            ThrottlingHandler handler = this.SetupThrottleHandler();
+            ThrottlingHandler handler = SetupThrottleHandler();
             HttpMessageInvoker invoker = new HttpMessageInvoker(handler);
 
             Stopwatch watch = new Stopwatch();
@@ -116,7 +111,7 @@ namespace ThrottlingSuite.Http.Tests
             }
 
             watch.Stop();
-            this.testContextInstance.WriteLine("Total ms: {0}; OK calls: {1}", watch.ElapsedMilliseconds, counter);
+            testContextInstance.WriteLine("Total ms: {0}; OK calls: {1}", watch.ElapsedMilliseconds, counter);
             Assert.IsTrue(counter / 10 <= watch.ElapsedMilliseconds);
         }
     }

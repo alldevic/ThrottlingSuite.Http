@@ -22,9 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
 
 namespace ThrottlingSuite.Core
 {
@@ -63,11 +60,11 @@ namespace ThrottlingSuite.Core
             if (configuration == null)
                 throw new ArgumentNullException("configuration");
 
-            this.Configuration = configuration;
+            Configuration = configuration;
             //create instances from configuration
             ControllerInstanceInitializer initializer = new ControllerInstanceInitializer();
-            List<ThrottlingControllerInstance> collection = initializer.CreateCollection(this.Configuration);
-            this.SetInstances(collection);
+            List<ThrottlingControllerInstance> collection = initializer.CreateCollection(Configuration);
+            SetInstances(collection);
         }
 
         /// <summary>
@@ -83,19 +80,19 @@ namespace ThrottlingSuite.Core
             if (instances == null)
                 throw new ArgumentNullException("instances");
 
-            this.Configuration = configuration;
-            this.SetInstances(instances);
+            Configuration = configuration;
+            SetInstances(instances);
             //ensure configuration in sync
-            this.Instances.ForEach(ins => ins.Controller.ConcurrencyModel = configuration.ConcurrencyModel);
+            Instances.ForEach(ins => ins.Controller.ConcurrencyModel = configuration.ConcurrencyModel);
         }
 
         private void SetInstances(IEnumerable<IThrottlingControllerInstance> instances)
         {
-            this.Instances = new List<IThrottlingControllerInstance>();
-            this.Instances.AddRange(instances);
+            Instances = new List<IThrottlingControllerInstance>();
+            Instances.AddRange(instances);
 
-            this.InstancesLookup = new Dictionary<string, IThrottlingController>();
-            this.Instances.ForEach(instance => this.InstancesLookup.Add(instance.Name, instance.Controller));
+            InstancesLookup = new Dictionary<string, IThrottlingController>();
+            Instances.ForEach(instance => InstancesLookup.Add(instance.Name, instance.Controller));
         }
 
         /// <summary>
@@ -108,8 +105,8 @@ namespace ThrottlingSuite.Core
             if (string.IsNullOrWhiteSpace(instanceName))
                 throw new ArgumentException("Value should not be null, an empty string, or a white space string.", "instanceName");
 
-            if (this.InstancesLookup.ContainsKey(instanceName))
-                return this.InstancesLookup[instanceName];
+            if (InstancesLookup.ContainsKey(instanceName))
+                return InstancesLookup[instanceName];
 
             return null;
         }
@@ -119,7 +116,7 @@ namespace ThrottlingSuite.Core
         /// </summary>
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -127,8 +124,8 @@ namespace ThrottlingSuite.Core
         {
             if (disposing)
             {
-                if (this.Instances != null)
-                    this.Instances.ForEach(instance => (instance.Controller as IDisposable).Dispose());
+                if (Instances != null)
+                    Instances.ForEach(instance => (instance.Controller as IDisposable).Dispose());
             }
         }
     }

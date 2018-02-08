@@ -22,8 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.Serialization;
 
 namespace ThrottlingSuite.Core
@@ -49,8 +47,8 @@ namespace ThrottlingSuite.Core
 
         public ThrottlingStatisticsData()
         {
-            this.Message = "";
-            this.Instances = new List<InstancesStatisticsData>();
+            Message = "";
+            Instances = new List<InstancesStatisticsData>();
         }
     }
 
@@ -77,8 +75,8 @@ namespace ThrottlingSuite.Core
 
         public InstancesStatisticsData()
         {
-            this.Name = "";
-            this.CreatedDatetime = DateTime.MinValue;
+            Name = "";
+            CreatedDatetime = DateTime.MinValue;
         }
 
     }

@@ -21,14 +21,9 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Configuration;
 using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Collections.Concurrent;
 using System.Web.Configuration;
 using ThrottlingSuite.Core;
 
@@ -47,7 +42,7 @@ namespace ThrottlingSuite.Modules
         public void Init(HttpApplication context)
         {
             //create throttling controller, but assure single instance per application domain.
-            if (this.Controller == null)
+            if (Controller == null)
             {
 #if TRACE
                 Trace.CorrelationManager.StartLogicalOperation(ThrottlingControllerSuiteAppLocation + " initialization.");
@@ -61,9 +56,9 @@ namespace ThrottlingSuite.Modules
                         context.Application.Add(ThrottlingControllerSuiteAppLocation, new ThrottlingControllerSuite(configuration));
                         context.Application.UnLock();
                     }
-                    this.Controller = (ThrottlingControllerSuite)context.Application[ThrottlingControllerSuiteAppLocation];
-                    this.RequestSignatureBuilder = (IRequestSignatureBuilder)Activator.CreateInstance(configuration.RequestSignatureBuilderType);
-                    this.RequestSignatureBuilder.Init(configuration);
+                    Controller = (ThrottlingControllerSuite)context.Application[ThrottlingControllerSuiteAppLocation];
+                    RequestSignatureBuilder = (IRequestSignatureBuilder)Activator.CreateInstance(configuration.RequestSignatureBuilderType);
+                    RequestSignatureBuilder.Init(configuration);
 #if TRACE
                     Trace.TraceInformation(ThrottlingControllerSuiteAppLocation + " is created with DuplicatedCallsFilter.");
 #endif
@@ -72,7 +67,7 @@ namespace ThrottlingSuite.Modules
 
             context.BeginRequest += new EventHandler(context_BeginRequest);
             SessionStateSection SessionSettings = (SessionStateSection)ConfigurationManager.GetSection("system.web/sessionState");
-            this.SessionCookieName = SessionSettings.CookieName;
+            SessionCookieName = SessionSettings.CookieName;
 #if TRACE
             Trace.TraceInformation("DuplicatedCallsFilter is initialized.");
             Trace.CorrelationManager.StopLogicalOperation();
@@ -90,7 +85,7 @@ namespace ThrottlingSuite.Modules
 #if TRACE
                 Trace.CorrelationManager.StartLogicalOperation("Throttling Suite processing.");
 #endif
-                if (!this.Controller.Configuration.Enabled)
+                if (!Controller.Configuration.Enabled)
                 {
 #if TRACE
                     Trace.TraceInformation("Throttling functionality is currently disabled.");
@@ -106,7 +101,7 @@ namespace ThrottlingSuite.Modules
                 HttpContext context = application.Context;
 
                 //compute request signature
-                requestSignature = this.RequestSignatureBuilder.ComputeRequestSignature(context);
+                requestSignature = RequestSignatureBuilder.ComputeRequestSignature(context);
 
                 //if no ASP.NET_SessionId cookies exists, add TCM (throttling control marker) value to mark all requests from specific client.
                 bool hasSessionId = (context.Request.Cookies[SessionCookieName] != null || context.Request.Cookies[ThrottlingConfiguration.CookieTrackingName] != null);
@@ -115,10 +110,10 @@ namespace ThrottlingSuite.Modules
 
                 //verify if call can go through
                 string blockedInstanceName = "";
-                if (!this.Controller.IsCallAllowed(context, requestSignature, hasSessionId, out blockedInstanceName))
+                if (!Controller.IsCallAllowed(context, requestSignature, hasSessionId, out blockedInstanceName))
                 {
                     context.Response.AppendToLog(string.Format("[BLOCKED:{0}]", blockedInstanceName));
-                    if (!this.Controller.Configuration.LogOnly)
+                    if (!Controller.Configuration.LogOnly)
                     {
                         context.Response.StatusCode = 429;
                         context.Response.StatusDescription = "Too Many Requests";
@@ -141,8 +136,8 @@ namespace ThrottlingSuite.Modules
 
         public void Dispose()
         {
-            if (this.Controller != null)
-                (this.Controller as IDisposable).Dispose();
+            if (Controller != null)
+                (Controller as IDisposable).Dispose();
         }
     }
 }

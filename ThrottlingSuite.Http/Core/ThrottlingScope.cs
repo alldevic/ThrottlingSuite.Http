@@ -22,11 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.Serialization;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 
 namespace ThrottlingSuite.Core
 {
@@ -50,7 +47,7 @@ namespace ThrottlingSuite.Core
         /// </summary>
         public ThrottlingScope()
         {
-            this.Items = new List<ThrottlingScopeItem>();
+            Items = new List<ThrottlingScopeItem>();
         }
 
         /// <summary>
@@ -63,12 +60,12 @@ namespace ThrottlingSuite.Core
         {
             ScopeItemCondition methodCondition = this.ConvertMethodToCondition(request.Method.Method);
 
-            return this.InScope(request.GetRequestVirtualPath(), methodCondition, hasTracking);
+            return InScope(request.GetRequestVirtualPath(), methodCondition, hasTracking);
         }
 
         private bool InScope(string url, ScopeItemCondition methodCondition, bool hasTracking)
         {
-            foreach (ThrottlingScopeItem item in this.Items)
+            foreach (ThrottlingScopeItem item in Items)
             {
                 if (item.Condition == ScopeItemCondition.None
                     || (//tracking condition has met

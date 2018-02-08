@@ -21,10 +21,8 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
-using System.Text;
 
 namespace ThrottlingSuite.Core
 {
@@ -41,7 +39,7 @@ namespace ThrottlingSuite.Core
         /// <summary>
         /// Gets current size of the dictionary internally used by the controller.
         /// </summary>
-        public override int LookupDictionarySize { get { return this.RequestsStat.Count; } }
+        public override int LookupDictionarySize { get { return RequestsStat.Count; } }
 
         /// <summary>
         /// Constructor with time interval in msec and threshold as a number of allowed requests per time interval. 
@@ -63,8 +61,8 @@ namespace ThrottlingSuite.Core
         public LinearThrottlingController(int timeIntervalMsec, int maxThreshold, int cleanupInterval)
             : base(timeIntervalMsec, maxThreshold, cleanupInterval)
         {
-            this.RequestsStat = new ConcurrentDictionary<string, DateTime>();
-            this.LinearThreshold = this.TimeIntervalMsec / this.MaxThreshold;
+            RequestsStat = new ConcurrentDictionary<string, DateTime>();
+            LinearThreshold = TimeIntervalMsec / MaxThreshold;
         }
 
         /// <summary>
@@ -76,18 +74,18 @@ namespace ThrottlingSuite.Core
         public override bool IsCallAllowed(string requestSignature, DateTime requestTimestamp)
         {
             //check defaults
-            if (this.TimeIntervalMsec == 0 || this.MaxThreshold == 0)
+            if (TimeIntervalMsec == 0 || MaxThreshold == 0)
                 return false;
-            if (this.TimeIntervalMsec == -1 || this.MaxThreshold == -1)
+            if (TimeIntervalMsec == -1 || MaxThreshold == -1)
                 return true;
             //follow up with rules
             bool isAllowed = true;
             DateTime currentDTStamp = requestTimestamp;
-            DateTime dtStamp = this.CreatedDatetime;
-            double elapsedTime = this.LinearThreshold;
+            DateTime dtStamp = CreatedDatetime;
+            double elapsedTime = LinearThreshold;
 
 #region Critical section begins
-            if (this.ConcurrencyModel == Core.ConcurrencyModel.Optimistic)
+            if (ConcurrencyModel == ConcurrencyModel.Optimistic)
             {
                 CalculateAndUpdateStat(requestSignature, ref isAllowed, currentDTStamp, ref dtStamp, ref elapsedTime);
             }
@@ -101,25 +99,25 @@ namespace ThrottlingSuite.Core
 #endregion Critical section ends
 
 #if TRACE
-            base.WriteTraceMessage(string.Format("Request: {0}; elapsedTime: {1}; {2} by [{3}].", requestSignature, elapsedTime.ToString(), isAllowed ? "ALLOWED" : "BLOCKED", this.Name));
+            WriteTraceMessage(string.Format("Request: {0}; elapsedTime: {1}; {2} by [{3}].", requestSignature, elapsedTime.ToString(), isAllowed ? "ALLOWED" : "BLOCKED", Name));
 #endif
-            this.IncrementTotalCalls();
+            IncrementTotalCalls();
             if (!isAllowed)
-                this.IncrementBlockedCalls();
+                IncrementBlockedCalls();
             return isAllowed;
         }
 
         private void CalculateAndUpdateStat(string requestSignature, ref bool isAllowed, DateTime currentDTStamp, ref DateTime dtStamp, ref double elapsedTime)
         {
-            if (this.RequestsStat.TryGetValue(requestSignature, out dtStamp))
+            if (RequestsStat.TryGetValue(requestSignature, out dtStamp))
             {
                 elapsedTime = currentDTStamp.Subtract(dtStamp).TotalMilliseconds;
-                isAllowed = (elapsedTime >= this.LinearThreshold);
+                isAllowed = (elapsedTime >= LinearThreshold);
             }
             //record new history if call is allowed
             if (isAllowed)
             {
-                this.RequestsStat.AddOrUpdate(requestSignature, currentDTStamp,
+                RequestsStat.AddOrUpdate(requestSignature, currentDTStamp,
                     (key, existingStamp) =>
                     {//if newer history is already recorded, then keep newer, otherwise use from current HTTP request
                         if (existingStamp == null)
@@ -134,20 +132,20 @@ namespace ThrottlingSuite.Core
         /// </summary>
         protected override void ExecuteCleanup()
         {
-            if (this.RequestsStat == null)
+            if (RequestsStat == null)
                 return;
 
             string key = "";
             DateTime now = DateTime.Now;
             DateTime tmp = DateTime.MinValue;
-            double lifetime = this.TimeIntervalMsec * 2;
+            double lifetime = TimeIntervalMsec * 2;
             int totalRemoved = 0;
-            for (int ii = 0; ii < this.RequestsStat.Count; ii++)
+            for (int ii = 0; ii < RequestsStat.Count; ii++)
             {
-                key = this.RequestsStat.Keys.ElementAt(ii);
-                if (now.Subtract(this.RequestsStat[key]).TotalMilliseconds > lifetime)
+                key = RequestsStat.Keys.ElementAt(ii);
+                if (now.Subtract(RequestsStat[key]).TotalMilliseconds > lifetime)
                 {
-                    if (this.RequestsStat.TryRemove(key, out tmp))
+                    if (RequestsStat.TryRemove(key, out tmp))
                     {
                         ii--; 
                         totalRemoved++;
@@ -155,7 +153,7 @@ namespace ThrottlingSuite.Core
                 }
             }
 #if TRACE
-            base.WriteTraceMessage(string.Format("Throttling controller [{1}] lookup dictionary cleanup is complete. {0} items have beed removed.", totalRemoved.ToString(), this.Name));
+            WriteTraceMessage(string.Format("Throttling controller [{1}] lookup dictionary cleanup is complete. {0} items have beed removed.", totalRemoved.ToString(), Name));
 #endif
         }
 
@@ -164,7 +162,7 @@ namespace ThrottlingSuite.Core
         /// </summary>
         protected override void Dispose(bool disposing)
         {
-            this.RequestsStat.Clear();
+            RequestsStat.Clear();
             base.Dispose(disposing);
         }
     }

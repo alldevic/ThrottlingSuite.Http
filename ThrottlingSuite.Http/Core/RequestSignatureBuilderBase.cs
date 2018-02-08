@@ -50,7 +50,7 @@ namespace ThrottlingSuite.Core
         /// <param name="configuration">The configuration object.</param>
         public void Init(ThrottlingConfiguration configuration)
         {
-            this.Configuration = configuration;
+            Configuration = configuration;
         }
 
         /// <summary>
@@ -60,12 +60,12 @@ namespace ThrottlingSuite.Core
         /// <returns>Returns a signature as a string.</returns>
         public string ComputeRequestSignature(HttpRequestMessage request)
         {
-            if (this.Configuration == null)
+            if (Configuration == null)
                 throw new Exception("Configiration must be initialized before calling this method.");
 
             //compute request signature
-            string reqDescription = this.ComputeRequestDescription(request);
-            return this.ComputeRequestSignature(reqDescription);
+            string reqDescription = ComputeRequestDescription(request);
+            return ComputeRequestSignature(reqDescription);
         }
 
         /// <summary>

@@ -21,10 +21,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
 
 namespace ThrottlingSuite.Core
 {
@@ -83,10 +79,10 @@ namespace ThrottlingSuite.Core
             if (string.IsNullOrWhiteSpace(controller.Name))
                 throw new ArgumentException("Name is required for controller.", "controller");
 
-            this.Controller = controller;
-            this.Name = this.Controller.Name;
-            this.Scope = scope;
-            this.Scope.OptimizeScopeItemsOrder();
+            Controller = controller;
+            Name = Controller.Name;
+            Scope = scope;
+            Scope.OptimizeScopeItemsOrder();
         }
 
         /// <summary>
@@ -118,12 +114,12 @@ namespace ThrottlingSuite.Core
         public static IThrottlingControllerInstance Create<T>(string name, int timeIntervalMsec, int maxThreshold, int cleanupInterval)
             where T : IThrottlingController
         {
-            var type = new Type[] { typeof(int), typeof(int), typeof(int) };
+            var type = new[] { typeof(int), typeof(int), typeof(int) };
             var pars = new object[] { timeIntervalMsec, maxThreshold, cleanupInterval };
-            T controller = (T)(typeof(T)).GetConstructor(type).Invoke(pars);
+            var controller = (T)(typeof(T)).GetConstructor(type)?.Invoke(pars);
 
             controller.Name = name;
-            ThrottlingControllerInstance instance = new ThrottlingControllerInstance(controller, new ThrottlingScope());
+            var instance = new ThrottlingControllerInstance(controller, new ThrottlingScope());
 
             return instance;
         }

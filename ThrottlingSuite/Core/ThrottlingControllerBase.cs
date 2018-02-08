@@ -54,12 +54,12 @@ namespace ThrottlingSuite.Core
         /// </summary>
         protected void IncrementTotalCalls()
         {
-            if (this.TotalCalls == ulong.MaxValue)
+            if (TotalCalls == ulong.MaxValue)
             {
-                this.TotalCalls = 0;
-                this.BlockedCalls = 0;
+                TotalCalls = 0;
+                BlockedCalls = 0;
             }
-            this.TotalCalls++;
+            TotalCalls++;
         }
 
         /// <summary>
@@ -67,12 +67,12 @@ namespace ThrottlingSuite.Core
         /// </summary>
         protected void IncrementBlockedCalls()
         {
-            if (this.BlockedCalls == ulong.MaxValue)
+            if (BlockedCalls == ulong.MaxValue)
             {
-                this.TotalCalls = 0;
-                this.BlockedCalls = 0;
+                TotalCalls = 0;
+                BlockedCalls = 0;
             }
-            this.BlockedCalls++;
+            BlockedCalls++;
         }
 
         /// <summary>
@@ -80,8 +80,8 @@ namespace ThrottlingSuite.Core
         /// </summary>
         public ThrottlingControllerStatus()
         {
-            this.Name = Guid.NewGuid().ToString("N");
-            this.CreatedDatetime = DateTime.Now;
+            Name = Guid.NewGuid().ToString("N");
+            CreatedDatetime = DateTime.Now;
         }
     }
 
@@ -136,15 +136,15 @@ namespace ThrottlingSuite.Core
             if (cleanupInterval == 0)
                 cleanupInterval = ThrottlingConfiguration.DefaultCleanupIntervalMsec;
 
-            this.TimeIntervalMsec = Convert.ToDouble(timeIntervalMsec);
-            this.MaxThreshold = Convert.ToDouble(maxThreshold);
-            this.ConcurrencyModel = ConcurrencyModel.Optimistic;
+            TimeIntervalMsec = Convert.ToDouble(timeIntervalMsec);
+            MaxThreshold = Convert.ToDouble(maxThreshold);
+            ConcurrencyModel = ConcurrencyModel.Optimistic;
 
-            this.cleanupTimer = new Timer();
-            this.cleanupTimer.Interval = Convert.ToDouble(cleanupInterval); //5 mins default
-            this.cleanupTimer.AutoReset = true;
-            this.cleanupTimer.Elapsed += new ElapsedEventHandler(cleanupTimer_Elapsed);
-            this.cleanupTimer.Start();
+            cleanupTimer = new Timer();
+            cleanupTimer.Interval = Convert.ToDouble(cleanupInterval); //5 mins default
+            cleanupTimer.AutoReset = true;
+            cleanupTimer.Elapsed += new ElapsedEventHandler(cleanupTimer_Elapsed);
+            cleanupTimer.Start();
         }
 
         /// <summary>
@@ -175,10 +175,10 @@ namespace ThrottlingSuite.Core
             try
             {
 #if TRACE
-                this.WriteTraceMessage(string.Format("Throttling controller [{0}] lookup dictionary cleanup is being called.", this.Name));
+                WriteTraceMessage(string.Format("Throttling controller [{0}] lookup dictionary cleanup is being called.", Name));
 #endif
                 //stop the timer...
-                this.cleanupTimer.Enabled = false;
+                cleanupTimer.Enabled = false;
                 ExecuteCleanup();
             }
             catch (Exception)
@@ -188,7 +188,7 @@ namespace ThrottlingSuite.Core
             finally
             {
                 //start the timer...
-                this.cleanupTimer.Enabled = true;
+                cleanupTimer.Enabled = true;
             }
         }
 
@@ -197,7 +197,7 @@ namespace ThrottlingSuite.Core
         /// </summary>
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -205,10 +205,10 @@ namespace ThrottlingSuite.Core
         {
             if (disposing)
             {
-                if (this.cleanupTimer != null)
+                if (cleanupTimer != null)
                 {
-                    this.cleanupTimer.Enabled = false;
-                    this.cleanupTimer.Dispose();
+                    cleanupTimer.Enabled = false;
+                    cleanupTimer.Dispose();
                 }
             }
         }

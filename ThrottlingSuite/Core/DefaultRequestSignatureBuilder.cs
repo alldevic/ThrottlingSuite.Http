@@ -21,10 +21,7 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Security.Cryptography;
 using System.Web;
 
 namespace ThrottlingSuite.Core
@@ -52,9 +49,9 @@ namespace ThrottlingSuite.Core
                 //assure removing parameters to ignore from the Full URL string
                 string fullUrl = (string)tmp;
                 int position1 = 0, position2 = 0;
-                if (string.IsNullOrWhiteSpace(fullUrl) && this.Configuration.SignatureBuilderParams.IgnoreParameters.Count > 0)
+                if (string.IsNullOrWhiteSpace(fullUrl) && Configuration.SignatureBuilderParams.IgnoreParameters.Count > 0)
                 {
-                    foreach (string ignoreParam in this.Configuration.SignatureBuilderParams.IgnoreParameters)
+                    foreach (string ignoreParam in Configuration.SignatureBuilderParams.IgnoreParameters)
                     {
                         position1 = fullUrl.IndexOf(ignoreParam, StringComparison.InvariantCultureIgnoreCase);
                         if (position1 >= 0)

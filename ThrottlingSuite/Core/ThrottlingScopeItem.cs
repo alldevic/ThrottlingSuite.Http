@@ -21,10 +21,7 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace ThrottlingSuite.Core
@@ -46,12 +43,12 @@ namespace ThrottlingSuite.Core
         {
             get
             {
-                return this.path;
+                return path;
             }
             set
             {
-                this.isIncludeAllPath = (value == "*" || value == "*.*");
-                this.path = value;
+                isIncludeAllPath = (value == "*" || value == "*.*");
+                path = value;
             }
         }
         /// <summary>
@@ -61,7 +58,7 @@ namespace ThrottlingSuite.Core
         {
             get
             {
-                return this.isIncludeAllPath;
+                return isIncludeAllPath;
             }
         }
         /// <summary>
@@ -79,7 +76,7 @@ namespace ThrottlingSuite.Core
         /// </summary>
         public bool IsRegex
         {
-            get { return this.PathRegex != null; }
+            get { return PathRegex != null; }
         }
 
         private ScopeItemCondition condition;
@@ -89,19 +86,19 @@ namespace ThrottlingSuite.Core
         [DataMember(Name = "condition", Order = 2)]
         public ScopeItemCondition Condition
         {
-            get { return this.condition; }
+            get { return condition; }
             set
             {
-                this.condition = value;
+                condition = value;
                 if (value.HasFlag(ScopeItemCondition.HasSessionId))
-                    this.condition = this.condition | ScopeItemCondition.HasTracking;
+                    condition = condition | ScopeItemCondition.HasTracking;
                 if (value.HasFlag(ScopeItemCondition.NoSessionId))
-                    this.condition = this.condition | ScopeItemCondition.HasNoTracking;
+                    condition = condition | ScopeItemCondition.HasNoTracking;
 
-                this.HasTrackingCondition = value.HasFlag(ScopeItemCondition.HasNoTracking)
+                HasTrackingCondition = value.HasFlag(ScopeItemCondition.HasNoTracking)
                     || value.HasFlag(ScopeItemCondition.HasTracking);
 
-                this.HasHttpMethodCondition = value.HasFlag(ScopeItemCondition.HttpDelete)
+                HasHttpMethodCondition = value.HasFlag(ScopeItemCondition.HttpDelete)
                     || value.HasFlag(ScopeItemCondition.HttpGet)
                     || value.HasFlag(ScopeItemCondition.HttpOptions)
                     || value.HasFlag(ScopeItemCondition.HttpPatch)
@@ -125,9 +122,9 @@ namespace ThrottlingSuite.Core
         /// </summary>
         public ThrottlingScopeItem()
         {
-            this.Path = "";
-            this.Condition = ScopeItemCondition.None;
-            this.Include = true;
+            Path = "";
+            Condition = ScopeItemCondition.None;
+            Include = true;
         }
     }
 }

@@ -20,12 +20,10 @@
 //    under certain conditions;
 #endregion
 
-using ThrottlingSuite.Modules;
 using ThrottlingSuite.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace ThrottlingSuiteUnitTests
